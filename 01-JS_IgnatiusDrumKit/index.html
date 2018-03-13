@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🎶⌨️JS Ignatius Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="./images/bald-man-face-with-beard-and-sunglasses.png" />
+
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image" content="https://raw.githubusercontent.com/Xatpy/JavaScript30/master/01-JS_IgnatiusDrumKit/images/bg.jpg" /> 
+  <meta property="og:title" content="JS Ignatius Drum Kit" />
+  <meta property="og:description" content="Ignatius key drums" />
+
+    <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@chapi13" />
+  <meta name="twitter:title" content="JS Ignatius Drum Kit" />
+  <meta name="twitter:description" content="Ignatius key drums" />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/Xatpy/JavaScript30/master/01-JS_IgnatiusDrumKit/images/bg.jpg" />
+</head>
+<body>
+
+  <div class="keys">
+    <div data-key="73" class="key">
+      <a href="#" >
+        <kbd>I</kbd>
+        <span class="sound">La Commmedia</span>
+      </a>
+    </div>
+    <div data-key="71" class="key">
+      <a href="#" >
+        <kbd>G</kbd>
+        <span class="sound">¡¿Cóóómmmo ?!</span>
+      </a>
+    </div>
+    <div data-key="78" class="key">
+      <a href="#" >
+        <kbd>N</kbd>
+        <span class="sound">¡¡¡¡ Padre ...!!!!</span>
+      </a>
+    </div>
+    <div data-key="65" class="key">
+      <a href="#" >
+        <kbd>A</kbd>
+        <span class="sound">Vasito de agua</span>
+      </a>
+    </div>
+    <div data-key="84" class="key">
+      <a href="#" >
+        <kbd>T</kbd>
+        <span class="sound">Pollito de Troya</span>
+      </a>
+    </div>
+    <div data-key="73" class="key">
+      <a href="#" >
+        <kbd>I</kbd>
+        <span class="sound">La Commmedia</span>
+      </a>
+    </div>
+    <div data-key="85" class="key">
+      <a href="#" >
+        <kbd>U</kbd>
+        <span class="sound">¡Riki diki show!</span>
+      </a>
+    </div>
+    <div data-key="83" class="key">
+      <a href="#" >
+        <kbd>S</kbd>
+        <span class="sound">Choque de pre</span>
+      </a>
+    </div>
+  </div>
+
+  <audio data-key="73" src="sounds/laCommedia.mp3"></audio>
+  <audio data-key="71" src="sounds/coommo.mp3"></audio>
+  <audio data-key="78" src="sounds/padre.mp3"></audio>
+  <audio data-key="65" src="sounds/vasitoDeAgua.mp3"></audio>
+  <audio data-key="84" src="sounds/pollitoDeTroya.mp3"></audio>
+  <audio data-key="73" src="sounds/laCommedia.mp3"></audio>
+  <audio data-key="85" src="sounds/rikiDikiShow.mp3"></audio>
+  <audio data-key="83" src="sounds/choqueDePre.mp3"></audio>
+
+<script>
+  function playSound(e) {
+    const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+    if (!audio) {
+      return false;
+    }
+    audio.currentTime = 0;
+    audio.play();
+
+    playTransition(e);
+    return true
+  }
+
+  function playTransition(e) {
+    const keys = document.querySelectorAll(`.key[data-key="${e.keyCode}"]`);
+    keys.forEach(key => key.classList.add('playing'));
+  }
+
+  function removeTransition(e) {
+    if (e.propertyName !== 'transform') {
+      return;
+    }
+    this.classList.remove('playing');
+  }
+
+  function activateKey(e) {
+    if (playSound(e)) {
+      playTransition(e);
+    }
+  }
+
+  function clickKey(e) {
+    var nd = e.target.parentNode.parentNode;
+    var key = nd.dataset.key;
+    if ((nd.className !== "key") || (key === undefined)) {
+      return;
+    }
+    e.keyCode = key; //Modifying event
+    activateKey(e);
+  }
+
+  const keys = (document.querySelectorAll('.key'));
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+
+  window.addEventListener('keydown', activateKey);
+  window.addEventListener('click', clickKey);
+
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-115527710-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-115527710-1');
+</script>
+
+</body>
+</html>
